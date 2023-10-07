@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ExamplePage from './ExamplePage'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ExamplePage from "./ExamplePage";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <ExamplePage />,
     },
   ]);
@@ -12,4 +12,4 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

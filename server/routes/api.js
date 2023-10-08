@@ -1,21 +1,28 @@
 const express = require("express");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
 const router = express.Router();
 
 router.post("/sign-up", async (req, res, next) => {
-  try {
-    const user = new User({
-      username: req.body.username,
-      password: req.body.password,
-      isMember: false,
-    });
-    await user.save();
-    res.end();
-  } catch (err) {
-    return next(err);
-  }
+  bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+    if (err) {
+      return next(err);
+    }
+
+    try {
+      const user = new User({
+        username: req.body.username,
+        password: hashedPassword,
+        isMember: false,
+      });
+      await user.save();
+      res.end();
+    } catch (err) {
+      return next(err);
+    }
+  });
 });
 
 router.post(

@@ -1,34 +1,40 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./App";
 import MessageList from "./MessageList";
+import ErrorList from "./ErrorList";
 
 function MainPage({ setUser }) {
   const user = useContext(UserContext);
+  const [errors, setErrors] = useState([]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const url = event.target.action;
     const method = event.target.method;
 
-    fetch(url, {
-      method: method,
-      body: new URLSearchParams(new FormData(event.target)),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error, status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUser(data); // { username, isMember, isAdmin }
-      })
-      .catch((err) => {
-        // TODO
-        console.log(`err:`, err);
+    try {
+      const response = await fetch(url, {
+        method: method,
+        body: new URLSearchParams(new FormData(event.target)),
       });
+
+      if (response.status === 400 || response.status === 401) {
+        setErrors(["Incorrect username or password."]);
+        return;
+      }
+      if (!response.ok) {
+        throw new Error(`Unrecognized error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setUser(data); // { username, isMember, isAdmin }
+      setErrors([]);
+    } catch (err) {
+      // TODO
+      console.log(`err:`, err);
+    }
   }
 
   if (user === null) {
@@ -45,6 +51,7 @@ function MainPage({ setUser }) {
           <input type="text" name="password" id="password" />
           <button type="submit">Submit</button>
         </form>
+        <ErrorList errors={errors} />
         <Link to="sign-up">Sign up</Link>
       </>
     );

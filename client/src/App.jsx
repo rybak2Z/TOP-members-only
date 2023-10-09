@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { createContext, useState } from "react";
-import SignUpPage from "./SignUpPage";
-import MainPage from "./MainPage";
-import JoinClubPage from "./JoinClubPage";
-import CreateMessagePage from "./CreateMessagePage";
+import SignUpPage from "./pages/SignUpPage";
+import MainPage from "./pages/MainPage";
+import JoinClubPage from "./pages/JoinClubPage";
+import CreateMessagePage from "./pages/CreateMessagePage";
 
 export const UserContext = createContext(null);
 

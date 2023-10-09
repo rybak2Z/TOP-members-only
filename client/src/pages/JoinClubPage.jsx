@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import ErrorList from "./ErrorList";
+import ErrorList from "../components/ErrorList";
 
 function JoinClubPage() {
   const [success, setSuccess] = useState(false);

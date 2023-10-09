@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "./App";
-import MessageList from "./MessageList";
-import ErrorList from "./ErrorList";
+import { UserContext } from "../App";
+import MessageList from "../components/MessageList";
+import ErrorList from "../components/ErrorList";
 
 function MainPage({ setUser }) {
   const user = useContext(UserContext);

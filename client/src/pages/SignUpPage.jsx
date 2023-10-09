@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import ErrorList from "./ErrorList";
+import ErrorList from "../components/ErrorList";
 
 function SignUpPage() {
   const [signedUp, setSignedUp] = useState(false);

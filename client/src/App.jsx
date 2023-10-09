@@ -1,13 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createContext, useState } from "react";
 import SignUpPage from "./SignUpPage";
 import MainPage from "./MainPage";
 import JoinClubPage from "./JoinClubPage";
 
+export const UserContext = createContext(null);
+
 function App() {
+  const [user, setUser] = useState(null);
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainPage />,
+      element: <MainPage setUser={setUser} />,
     },
     {
       path: "/sign-up",
@@ -19,7 +24,13 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <UserContext.Provider value={user}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
+    </>
+  );
 }
 
 export default App;

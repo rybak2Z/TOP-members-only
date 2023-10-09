@@ -29,7 +29,9 @@ router.post("/sign-up", async (req, res, next) => {
 
 router.post("/log-in", passport.authenticate("local"), (req, res, next) => {
   if (req.user) {
-    res.status(200).end();
+    res
+      .status(200)
+      .json({ username: req.user.username, isMember: req.user.isMember });
   } else {
     res.status(401).end();
   }

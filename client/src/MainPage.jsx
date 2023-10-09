@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./App";
 
-function MainPage() {
-  const [username, setUsername] = useState(null);
+function MainPage({ setUser }) {
+  const user = useContext(UserContext);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -18,8 +19,10 @@ function MainPage() {
         if (!response.ok) {
           throw new Error(`HTTP error, status: ${response.status}`);
         }
-        const usernameInput = document.querySelector("#username");
-        setUsername(usernameInput.value);
+        return response.json();
+      })
+      .then((data) => {
+        setUser(data); // { username, isMember }
       })
       .catch((err) => {
         // TODO
@@ -27,7 +30,7 @@ function MainPage() {
       });
   }
 
-  if (!username) {
+  if (user === null) {
     return (
       <>
         <form
@@ -48,7 +51,7 @@ function MainPage() {
 
   return (
     <>
-      <h1>Welcome, {username}!</h1>
+      <h1>Welcome, {user.username}!</h1>
       <a href="api/log-out">Log out</a>
       <Link to="join-club">Become a club member</Link>
     </>

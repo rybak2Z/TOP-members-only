@@ -1,29 +1,36 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import ErrorList from "./ErrorList";
 
 function SignUpPage() {
   const [signedUp, setSignedUp] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const url = event.target.action;
     const method = event.target.method;
 
-    fetch(url, {
-      method: method,
-      body: new URLSearchParams(new FormData(event.target)),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error, status: ${response.status}`);
-        }
-        setSignedUp(true);
-      })
-      .catch((err) => {
-        // TODO
-        console.log(`err:`, err);
+    try {
+      const response = await fetch(url, {
+        method: method,
+        body: new URLSearchParams(new FormData(event.target)),
       });
+
+      if (response.status === 400) {
+        const data = await response.json();
+        const errors = data.errors.map((err) => err.msg);
+        setErrors(errors);
+      } else if (!response.ok) {
+        throw new Error(`Unrecognized error: ${response.status}`);
+      } else {
+        setSignedUp(true);
+      }
+    } catch (err) {
+      // TODO
+      console.log(`err:`, err);
+    }
   }
 
   return signedUp ? (
@@ -43,6 +50,7 @@ function SignUpPage() {
         <input type="text" name="confirmPassword" id="confirm-password" />
         <button type="submit">Submit</button>
       </form>
+      <ErrorList errors={errors} />
     </>
   );
 }

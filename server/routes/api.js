@@ -73,7 +73,7 @@ router.post(
         isAdmin: req.user.isAdmin,
       });
     } else {
-      res.status(401).end();
+      res.redirect("/");
     }
   },
 );
@@ -99,7 +99,9 @@ router.post(
       req.body.passcode === MEMBERSHIP_PASSCODE ||
       req.body.passcode === ADMIN_PASSCODE;
     if (!validPasscode) {
-      return res.status(401).json({ message: "Passcode is not correct." });
+      return res
+        .status(401)
+        .json({ success: false, errorMessage: "Passcode is not correct." });
     }
 
     const user = await User.findById(req.user.id).exec();
@@ -112,7 +114,10 @@ router.post(
 
     res
       .status(200)
-      .json({ accountStatus: user.isAdmin ? "admin" : "club member" });
+      .json({
+        success: true,
+        accountStatus: user.isAdmin ? "admin" : "club member",
+      });
   }),
 );
 

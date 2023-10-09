@@ -34,7 +34,11 @@ router.post("/log-in", passport.authenticate("local"), (req, res, next) => {
   if (req.user) {
     res
       .status(200)
-      .json({ username: req.user.username, isMember: req.user.isMember });
+      .json({
+        username: req.user.username,
+        isMember: req.user.isMember,
+        isAdmin: req.user.isAdmin,
+      });
   } else {
     res.status(401).end();
   }
@@ -94,14 +98,26 @@ router.get("/messages", async (req, res, next) => {
 
   const query = Message.find();
   if (req.user.isMember) {
-    query.select("-_id text user date");
+    query.select("text user date");
     query.populate("user", "-_id username");
   } else {
-    query.select("-_id text");
+    query.select("text");
   }
 
   const messages = await query.exec();
   res.json({ messages });
+});
+
+router.delete("/message/:id", async (req, res, next) => {
+  if (!req.user?.isAdmin) {
+    return res.status(401).end();
+  }
+
+  const removedMessage = await Message.findByIdAndRemove(req.params.id).exec();
+  if (!removedMessage) {
+    return res.status(400).end();
+  }
+  res.status(200).end();
 });
 
 module.exports = router;

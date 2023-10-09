@@ -23,7 +23,7 @@ function MainPage({ setUser }) {
         return response.json();
       })
       .then((data) => {
-        setUser(data); // { username, isMember }
+        setUser(data); // { username, isMember, isAdmin }
       })
       .catch((err) => {
         // TODO

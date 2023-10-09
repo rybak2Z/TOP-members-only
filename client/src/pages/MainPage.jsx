@@ -52,7 +52,11 @@ function MainPage({ setUser }) {
           <button type="submit">Submit</button>
         </form>
         <ErrorList errors={errors} />
-        <Link to="sign-up">Sign up</Link>
+        <hr />
+        <div class="flex">
+          <span>Don't have an account?</span>
+          <Link to="sign-up" class='thin-padding'>Sign up</Link>
+        </div>
       </>
     );
   }

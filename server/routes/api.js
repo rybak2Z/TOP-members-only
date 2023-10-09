@@ -27,10 +27,14 @@ router.post("/sign-up", async (req, res, next) => {
 
 router.post(
   "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/",
-  }),
+  passport.authenticate("local"),
+  (req, res, next) => {
+    if (req.user) {
+      res.status(200).end();
+    } else {
+      res.status(401).end();
+    }
+  }
 );
 
 router.get("/log-out", (req, res, next) => {

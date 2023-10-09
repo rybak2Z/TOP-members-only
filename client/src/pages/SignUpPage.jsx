@@ -42,11 +42,11 @@ function SignUpPage() {
         action="/api/sign-up"
         onSubmit={(event) => handleSubmit(event)}
       >
-        <label for="username">Username: </label>
+        <label for="username">Username</label>
         <input type="text" name="username" id="username" />
-        <label for="password">Password: </label>
+        <label for="password">Password</label>
         <input type="text" name="password" id="password" />
-        <label for="confirm-password">Confirm password: </label>
+        <label for="confirm-password">Confirm password</label>
         <input type="text" name="confirmPassword" id="confirm-password" />
         <button type="submit">Submit</button>
       </form>

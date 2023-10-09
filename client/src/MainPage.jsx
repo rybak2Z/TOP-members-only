@@ -52,7 +52,7 @@ function MainPage({ setUser }) {
   return (
     <>
       <h1>Welcome, {user.username}!</h1>
-      <Link href="api/log-out">Log out</Link>
+      <a href="/api/log-out">Log out</a>
       <Link to="join-club">Become a club member</Link>
       <Link to="create-message">Create a new message</Link>
     </>

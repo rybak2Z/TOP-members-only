@@ -52,8 +52,9 @@ function MainPage({ setUser }) {
   return (
     <>
       <h1>Welcome, {user.username}!</h1>
-      <a href="api/log-out">Log out</a>
+      <Link href="api/log-out">Log out</Link>
       <Link to="join-club">Become a club member</Link>
+      <Link to="create-message">Create a new message</Link>
     </>
   );
 }

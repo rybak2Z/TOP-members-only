@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./App";
+import MessageList from "./MessageList";
 
 function MainPage({ setUser }) {
   const user = useContext(UserContext);
@@ -55,6 +56,8 @@ function MainPage({ setUser }) {
       <a href="/api/log-out">Log out</a>
       <Link to="join-club">Become a club member</Link>
       <Link to="create-message">Create a new message</Link>
+      <hr />
+      <MessageList />
     </>
   );
 }

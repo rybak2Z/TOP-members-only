@@ -3,6 +3,8 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
+const MEMBERSHIP_PASSCODE = process.env.MEMBERSHIP_PASSCODE;
+
 const router = express.Router();
 
 router.post("/sign-up", async (req, res, next) => {
@@ -25,17 +27,13 @@ router.post("/sign-up", async (req, res, next) => {
   });
 });
 
-router.post(
-  "/log-in",
-  passport.authenticate("local"),
-  (req, res, next) => {
-    if (req.user) {
-      res.status(200).end();
-    } else {
-      res.status(401).end();
-    }
+router.post("/log-in", passport.authenticate("local"), (req, res, next) => {
+  if (req.user) {
+    res.status(200).end();
+  } else {
+    res.status(401).end();
   }
-);
+});
 
 router.get("/log-out", (req, res, next) => {
   req.logout((err) => {
@@ -44,6 +42,22 @@ router.get("/log-out", (req, res, next) => {
     }
     res.redirect("/");
   });
+});
+
+router.post("/join-club", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/");
+  }
+
+  if (req.body.passcode !== MEMBERSHIP_PASSCODE) {
+    return res.status(401).end();
+  }
+
+  const user = await User.findById(req.user.id).exec();
+  user.isMember = true;
+  await user.save();
+
+  res.status(200).end();
 });
 
 module.exports = router;

@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 import SignUpPage from "./SignUpPage";
 import MainPage from "./MainPage";
 import JoinClubPage from "./JoinClubPage";
+import CreateMessagePage from "./CreateMessagePage";
 
 export const UserContext = createContext(null);
 
@@ -21,6 +22,10 @@ function App() {
     {
       path: "join-club",
       element: <JoinClubPage />,
+    },
+    {
+      path: "create-message",
+      element: <CreateMessagePage />,
     },
   ]);
 

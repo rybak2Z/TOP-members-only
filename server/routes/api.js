@@ -78,4 +78,21 @@ router.post("/create-message", async (req, res, next) => {
   res.status(200).end();
 });
 
+router.get("/messages", async (req, res, next) => {
+  if (!req.user) {
+    return res.status(400).end();
+  }
+
+  const query = Message.find();
+  if (req.user.isMember) {
+    query.select("-_id text user date");
+    query.populate("user", "-_id username");
+  } else {
+    query.select("-_id text");
+  }
+
+  const messages = await query.exec();
+  res.json({ messages });
+});
+
 module.exports = router;

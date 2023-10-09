@@ -16,15 +16,10 @@ function JoinClubPage() {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
           throw new Error(`HTTP error, status: ${response.status}`);
         }
         if (response.status === 200) {
-          console.log(response.status);
-          console.log("you are a member");
           setSuccess(true);
-        } else {
-          console.log("something else happened");
         }
       })
       .catch((err) => {

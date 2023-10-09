@@ -1,4 +1,9 @@
-function Message({ text, username, date }) {
+import { useContext } from "react";
+import { UserContext } from "./App";
+
+function Message({ text, username, date, onDelete }) {
+  const user = useContext(UserContext);
+
   return (
     <>
       {username && (
@@ -7,6 +12,7 @@ function Message({ text, username, date }) {
         </h2>
       )}
       <p>{text}</p>
+      {user.isAdmin && <button onClick={onDelete}>Delete</button>}
       <hr />
     </>
   );

@@ -25,12 +25,28 @@ function MessageList() {
     };
   }, []);
 
+  function handleDeleteMessage(indexToDelete, id) {
+    const newMessages = [...messages];
+    fetch("/api/message/" + id, { method: "DELETE" })
+      .then((response) => {
+        if (response.ok) {
+          newMessages.splice(indexToDelete, 1);
+          setMessages(newMessages);
+        }
+      })
+      .catch((err) => {
+        // TODO
+        console.log(err);
+      });
+  }
+
   const messageElements = messages.map((message, idx) => {
     return (
       <Message
         text={message.text}
         username={message.user?.username}
         date={message.date}
+        onDelete={() => handleDeleteMessage(idx, message._id)}
         key={idx}
       />
     );

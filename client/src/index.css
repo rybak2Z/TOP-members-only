@@ -48,6 +48,10 @@ button, a, input, textarea {
   box-shadow: 0px 2px hsl(0 0% 30%);
 }
 
+form, div {
+  padding: 1rem;
+}
+
 input, textarea {
   box-sizing: border-box;
   width: 100%;
@@ -77,4 +81,20 @@ label {
 button[type="submit"] {
   margin-top: 2rem;
   width: 100%;
+}
+
+hr {
+  border-color: var(--primary-light);
+  border-width: 2px;
+}
+
+.thin-padding {
+  padding: 0.3rem 0.5rem;
+}
+
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
 }

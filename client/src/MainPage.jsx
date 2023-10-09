@@ -50,6 +50,7 @@ function MainPage() {
     <>
       <h1>Welcome, {username}!</h1>
       <a href="api/log-out">Log out</a>
+      <Link to="join-club">Become a club member</Link>
     </>
   );
 }

@@ -31,6 +31,13 @@ body {
   max-width: 65%;
 }
 
+button {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
 button, a, input, textarea {
   padding: 0.7rem;
   font-size: 1rem;

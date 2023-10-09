@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "./App";
-import ErrorList from "./ErrorList";
+import { UserContext } from "../App";
+import ErrorList from "../components/ErrorList";
 
 function CreateMessagePage() {
   const user = useContext(UserContext);

@@ -38,7 +38,10 @@ button {
   font-size: 1rem;
 }
 
-button, a, input, textarea {
+button,
+a,
+input,
+textarea {
   padding: 0.7rem;
   font-size: 1rem;
   border-radius: 5px;
@@ -48,16 +51,19 @@ button, a, input, textarea {
   box-shadow: 0px 2px hsl(0 0% 30%);
 }
 
-form, div {
+form,
+div {
   padding: 1rem;
 }
 
-input, textarea {
+input,
+textarea {
   box-sizing: border-box;
   width: 100%;
 }
 
-button, a {
+button,
+a {
   &:hover {
     color: var(--primary);
     background-color: var(--secondary);

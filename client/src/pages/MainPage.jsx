@@ -55,7 +55,9 @@ function MainPage({ setUser }) {
         <hr />
         <div class="flex">
           <span>Don't have an account?</span>
-          <Link to="sign-up" class='thin-padding'>Sign up</Link>
+          <Link to="sign-up" class="thin-padding">
+            Sign up
+          </Link>
         </div>
       </>
     );

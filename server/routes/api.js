@@ -112,12 +112,10 @@ router.post(
 
     await user.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        accountStatus: user.isAdmin ? "admin" : "club member",
-      });
+    res.status(200).json({
+      success: true,
+      accountStatus: user.isAdmin ? "admin" : "club member",
+    });
   }),
 );
 

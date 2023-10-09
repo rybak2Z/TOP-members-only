@@ -48,7 +48,7 @@ function CreateMessagePage() {
         action="/api/create-message"
         onSubmit={(event) => handleSubmit(event)}
       >
-        <label for="message-text">Message:</label>
+        <label for="message-text">Message</label>
         <textarea
           name="messageText"
           id="message-text"

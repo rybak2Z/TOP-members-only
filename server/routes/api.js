@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Message = require("../models/message");
 
 const MEMBERSHIP_PASSCODE = process.env.MEMBERSHIP_PASSCODE;
+const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE;
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.post("/sign-up", async (req, res, next) => {
         username: req.body.username,
         password: hashedPassword,
         isMember: false,
+        isAdmin: false,
       });
       await user.save();
       res.end();
@@ -52,12 +54,19 @@ router.post("/join-club", async (req, res, next) => {
     return res.redirect("/");
   }
 
-  if (req.body.passcode !== MEMBERSHIP_PASSCODE) {
+  const validPasscode =
+    req.body.passcode === MEMBERSHIP_PASSCODE ||
+    req.body.passcode === ADMIN_PASSCODE;
+  if (!validPasscode) {
     return res.status(401).end();
   }
 
   const user = await User.findById(req.user.id).exec();
   user.isMember = true;
+  if (req.body.passcode === ADMIN_PASSCODE) {
+    user.isAdmin = true;
+  }
+
   await user.save();
 
   res.status(200).end();

@@ -48,6 +48,11 @@ button, a, input, textarea {
   box-shadow: 0px 2px hsl(0 0% 30%);
 }
 
+input, textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
 button, a {
   &:hover {
     color: var(--primary);
@@ -62,4 +67,14 @@ button, a {
 a {
   display: inline-block;
   text-decoration: none;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+button[type="submit"] {
+  margin-top: 2rem;
+  width: 100%;
 }

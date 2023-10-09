@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
 const Message = require("../models/message");
 
@@ -12,7 +13,32 @@ const router = express.Router();
 
 router.post(
   "/sign-up",
+  body("username")
+    .trim()
+    .escape()
+    .isLength({ min: 1 })
+    .withMessage("Username must not be empty.")
+    .isLength({ max: 16 })
+    .withMessage("Username can be only up to 16 characters long.")
+    .isAlphanumeric()
+    .withMessage("Username must only contain alphanumeric characters."),
+  body("password")
+    .trim()
+    .escape()
+    .isLength({ min: 4 })
+    .withMessage("Password must be at least 4 characters long.")
+    .isLength({ max: 128 })
+    .withMessage("Password can be only up to 128 characters long.")
+    .isAlphanumeric()
+    .withMessage("Password must only contain alphanumeric characters.")
+    .custom((password, { req }) => password === req.body.confirmPassword)
+    .withMessage("Password and confirm password must match."),
   asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
+
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) {
         return next(err);
@@ -34,17 +60,23 @@ router.post(
   }),
 );
 
-router.post("/log-in", passport.authenticate("local"), (req, res, next) => {
-  if (req.user) {
-    res.status(200).json({
-      username: req.user.username,
-      isMember: req.user.isMember,
-      isAdmin: req.user.isAdmin,
-    });
-  } else {
-    res.status(401).end();
-  }
-});
+router.post(
+  "/log-in",
+  body("username").escape(),
+  body("password").escape(),
+  passport.authenticate("local"),
+  (req, res, next) => {
+    if (req.user) {
+      res.status(200).json({
+        username: req.user.username,
+        isMember: req.user.isMember,
+        isAdmin: req.user.isAdmin,
+      });
+    } else {
+      res.status(401).end();
+    }
+  },
+);
 
 router.get("/log-out", (req, res, next) => {
   req.logout((err) => {
@@ -57,6 +89,7 @@ router.get("/log-out", (req, res, next) => {
 
 router.post(
   "/join-club",
+  body("passcode").escape(),
   asyncHandler(async (req, res, next) => {
     if (!req.user) {
       return res.redirect("/");
@@ -66,7 +99,7 @@ router.post(
       req.body.passcode === MEMBERSHIP_PASSCODE ||
       req.body.passcode === ADMIN_PASSCODE;
     if (!validPasscode) {
-      return res.status(401).end();
+      return res.status(401).json({ message: "Passcode is not correct." });
     }
 
     const user = await User.findById(req.user.id).exec();
@@ -77,15 +110,31 @@ router.post(
 
     await user.save();
 
-    res.status(200).end();
+    res
+      .status(200)
+      .json({ accountStatus: user.isAdmin ? "admin" : "club member" });
   }),
 );
 
 router.post(
   "/create-message",
+  body("messageText")
+    .trim()
+    .escape()
+    .isLength({ min: 1 })
+    .withMessage("Message must not be empty.")
+    .isLength({ max: 1024 })
+    .withMessage("Message can be only up to 1024 characters long.")
+    .isAlphanumeric()
+    .withMessage("Message must only contain alphanumeric characters."),
   asyncHandler(async (req, res, next) => {
     if (!req.user) {
       return res.status(400).end();
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
     }
 
     const message = new Message({

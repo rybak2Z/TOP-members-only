@@ -9,6 +9,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const User = require("./models/user");
 
 const apiRouter = require("./routes/api");
@@ -21,6 +22,16 @@ async function connectToDb() {
   await mongoose.connect(mongoDbUri, { dbName: databaseName });
   console.log("Successfully connected to mongodb");
 }
+
+const sessionStore = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  databaseName: process.env.DB_NAME,
+  collection: "sessions",
+});
+
+sessionStore.on("error", (err) => {
+  console.log(err);
+});
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -64,6 +75,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: sessionStore,
   }),
 );
 app.use(passport.initialize());

@@ -4,7 +4,7 @@ import { UserContext } from "../App";
 function Message({ text, username, date, onDelete }) {
   const user = useContext(UserContext);
 
-  const formattedDate = new Date(date).toLocaleString();
+  const formattedDate = date ? new Date(date).toLocaleString() : null;
 
   return (
     <li class="message">

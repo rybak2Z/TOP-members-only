@@ -219,6 +219,12 @@ p {
   }
 }
 
+.back-button {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+}
+
 #new-message-button {
   margin: 2rem 1rem 1rem 1rem;
   border-style: dashed;

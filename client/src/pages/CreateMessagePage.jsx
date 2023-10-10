@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../App";
 import ErrorList from "../components/ErrorList";
+import BackButton from "../components/BackButton";
 
 function CreateMessagePage() {
   const user = useContext(UserContext);
@@ -42,6 +43,7 @@ function CreateMessagePage() {
 
   return (
     <>
+      <BackButton />
       <h1>Create a new message</h1>
       <form
         method="POST"

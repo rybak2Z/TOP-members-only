@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ErrorList from "../components/ErrorList";
 import Modal from "../components/Modal";
+import BackButton from "../components/BackButton";
 
 function JoinClubPage() {
   const [successMessage, setSuccessMessage] = useState("");
@@ -42,6 +43,7 @@ function JoinClubPage() {
 
   return (
     <>
+      <BackButton />
       {successMessage && (
         <Modal message={successMessage} onClose={() => setSuccessMessage("")} />
       )}

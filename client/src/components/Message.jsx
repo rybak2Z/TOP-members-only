@@ -5,16 +5,16 @@ function Message({ text, username, date, onDelete }) {
   const user = useContext(UserContext);
 
   return (
-    <>
-      {username && (
-        <h2>
-          {username} ({date})
-        </h2>
-      )}
+    <li class="message">
+      <h1>Author: {username ?? "(hidden for non club members)"}</h1>
+      <h2>Date: {date ?? "(hidden for non club members)"}</h2>
       <p>{text}</p>
-      {user.isAdmin && <button onClick={onDelete}>Delete</button>}
-      <hr />
-    </>
+      {user.isAdmin && (
+        <button class="thin-padding button-secondary" onClick={onDelete}>
+          Delete
+        </button>
+      )}
+    </li>
   );
 }
 

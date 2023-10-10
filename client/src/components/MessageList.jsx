@@ -53,9 +53,9 @@ function MessageList() {
   });
 
   return (
-    <>
+    <ul class="message-list">
       {messageElements.length > 0 ? messageElements : "There are no messages"}
-    </>
+    </ul>
   );
 }
 

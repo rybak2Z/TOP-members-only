@@ -8,7 +8,7 @@
   --primary-light: #292929;
   --secondary: #ffd700;
   --secondary-dark: #c2a500;
-  --shadow-color: hsl(0 0% 10%);
+  --shadow-color: hsl(0 0% 30%);
 
   color: var(--secondary);
   background-color: var(--primary);
@@ -45,7 +45,7 @@ textarea {
   border: none;
   color: var(--secondary);
   background-color: var(--primary-light);
-  box-shadow: 0px 2px hsl(0 0% 30%);
+  box-shadow: 0px 2px var(--shadow-color);
 }
 
 input,
@@ -102,14 +102,45 @@ hr {
 }
 
 ul {
-  background-color: hsla(0 25% 13%);
-  color: hsla(0 55% 50%);
-  border: 2px solid hsla(0 50% 25%);
-  border-radius: 5px;
-  padding: 1rem;
-  padding-left: 2rem;
   margin: 1rem;
   box-sizing: border-box;
+
+  &.error-list {
+    background-color: hsla(0 25% 13%);
+    color: hsla(0 55% 50%);
+    border: 2px solid hsla(0 50% 25%);
+    border-radius: 5px;
+    padding: 1rem;
+    padding-left: 2rem;
+  }
+
+  &.message-list {
+    padding: 0;
+    list-style: none;
+  }
+}
+
+li.message {
+  background-color: var(--primary-light);
+  border-radius: 5px;
+  border: 2px solid var(--shadow-color);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  & h1,
+  & h2 {
+    margin: 0;
+    text-align: left;
+  }
+
+  & h1 {
+    font-size: 1.3rem;
+  }
+
+  & h2 {
+    font-size: 1.15rem;
+  }
 }
 
 h1,

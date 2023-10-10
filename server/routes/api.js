@@ -123,13 +123,10 @@ router.post(
   "/create-message",
   body("messageText")
     .trim()
-    .escape()
     .isLength({ min: 1 })
     .withMessage("Message must not be empty.")
     .isLength({ max: 1024 })
-    .withMessage("Message can be only up to 1024 characters long.")
-    .isAlphanumeric()
-    .withMessage("Message must only contain alphanumeric characters."),
+    .withMessage("Message can be only up to 1024 characters long."),
   asyncHandler(async (req, res, next) => {
     if (!req.user) {
       return res.status(400).end();

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../App";
+import useForm from "../hooks/useForm";
 import ErrorList from "../components/ErrorList";
 import BackButton from "../components/BackButton";
 
@@ -8,48 +9,26 @@ function CreateMessagePage() {
   const user = useContext(UserContext);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
+  const handleSubmit = useForm(responseHandler);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const url = event.target.action;
-    const method = event.target.method;
-
-    fetch(url, {
-      method: method,
-      body: new URLSearchParams(new FormData(event.target)),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setSuccess(true);
-          setErrors([]);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        const errors = data.errors.map((err) => err.msg);
-        setErrors(errors);
-      })
-      .catch((err) => {
-        // TODO
-        console.log(`err:`, err);
-      });
+  async function responseHandler(response) {
+    if (response.ok) {
+      setSuccess(true);
+      setErrors([]);
+      return;
+    }
+    const data = await response.json();
+    const errors = data.errors.map((err) => err.msg);
+    setErrors(errors);
   }
 
-  if (user === null || success) {
-    return <Navigate to="/" />;
-  }
-
-  return (
+  return user === null || success ? (
+    <Navigate to="/" />
+  ) : (
     <>
       <BackButton />
       <h1>Create a new message</h1>
-      <form
-        method="POST"
-        action="/api/create-message"
-        onSubmit={(event) => handleSubmit(event)}
-      >
+      <form method="POST" action="/api/create-message" onSubmit={handleSubmit}>
         <label for="message-text">Message</label>
         <textarea
           name="messageText"

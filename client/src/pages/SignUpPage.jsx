@@ -1,36 +1,23 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import useForm from "../hooks/useForm";
 import ErrorList from "../components/ErrorList";
 import BackButton from "../components/BackButton";
 
 function SignUpPage() {
   const [signedUp, setSignedUp] = useState(false);
   const [errors, setErrors] = useState([]);
+  const handleSubmit = useForm(responseHandler);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    const url = event.target.action;
-    const method = event.target.method;
-
-    try {
-      const response = await fetch(url, {
-        method: method,
-        body: new URLSearchParams(new FormData(event.target)),
-      });
-
-      if (response.status === 400) {
-        const data = await response.json();
-        const errors = data.errors.map((err) => err.msg);
-        setErrors(errors);
-      } else if (!response.ok) {
-        throw new Error(`Unrecognized error: ${response.status}`);
-      } else {
-        setSignedUp(true);
-      }
-    } catch (err) {
-      // TODO
-      console.log(`err:`, err);
+  async function responseHandler(response) {
+    if (response.status === 400) {
+      const data = await response.json();
+      const errors = data.errors.map((err) => err.msg);
+      setErrors(errors);
+    } else if (!response.ok) {
+      throw new Error(`Unrecognized error: ${response.status}`);
+    } else {
+      setSignedUp(true);
     }
   }
 
@@ -39,11 +26,7 @@ function SignUpPage() {
   ) : (
     <>
       <BackButton />
-      <form
-        method="POST"
-        action="/api/sign-up"
-        onSubmit={(event) => handleSubmit(event)}
-      >
+      <form method="POST" action="/api/sign-up" onSubmit={handleSubmit}>
         <label for="username">Username</label>
         <input type="text" name="username" id="username" />
         <label for="password">Password</label>

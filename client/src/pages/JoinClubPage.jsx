@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 import ErrorList from "../components/ErrorList";
+import Modal from "../components/Modal";
 
 function JoinClubPage() {
   const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState([]);
 
   function handleSubmit(event) {
@@ -25,7 +26,10 @@ function JoinClubPage() {
       .then((data) => {
         if (data.success) {
           setSuccess(true);
-          alert("Your new account status: " + data.accountStatus);
+          const statusArticle = data.accountStatus === "admin" ? "an" : "a";
+          setSuccessMessage(
+            `You are now ${statusArticle} ${data.accountStatus}!`,
+          );
         } else {
           setSuccess(false);
           setErrors([data.errorMessage]);
@@ -37,10 +41,11 @@ function JoinClubPage() {
       });
   }
 
-  return success ? (
-    <Navigate to="/" />
-  ) : (
+  return (
     <>
+      {success && successMessage && (
+        <Modal message={successMessage} onClose={() => setSuccessMessage("")} />
+      )}
       <form
         method="POST"
         action="api/join-club"

@@ -31,24 +31,26 @@ body {
   max-width: 65%;
 }
 
-button {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 500;
-  font-size: 1rem;
-}
-
 button,
 a,
 input,
 textarea {
-  padding: 0.7rem;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
   font-size: 1rem;
+
+  padding: 0.7rem;
   border-radius: 5px;
   border: none;
   color: var(--secondary);
   background-color: var(--primary-light);
   box-shadow: 0px 2px hsl(0 0% 30%);
+}
+
+input,
+textarea {
+  font-weight: normal;
 }
 
 form,

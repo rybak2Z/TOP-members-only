@@ -21,7 +21,14 @@ router.post(
     .isLength({ max: 16 })
     .withMessage("Username can be only up to 16 characters long.")
     .isAlphanumeric()
-    .withMessage("Username must only contain alphanumeric characters."),
+    .withMessage("Username must only contain alphanumeric characters.")
+    .custom(async (username) => {
+      const userWithSameUsername = await User.findOne({ username }).exec();
+      if (userWithSameUsername !== null) {
+        throw new Error("Username is already taken.");
+      }
+      return true;
+    }),
   body("password")
     .trim()
     .escape()

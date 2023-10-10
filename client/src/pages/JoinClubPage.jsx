@@ -3,7 +3,6 @@ import ErrorList from "../components/ErrorList";
 import Modal from "../components/Modal";
 
 function JoinClubPage() {
-  const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState([]);
 
@@ -25,13 +24,12 @@ function JoinClubPage() {
       })
       .then((data) => {
         if (data.success) {
-          setSuccess(true);
           const statusArticle = data.accountStatus === "admin" ? "an" : "a";
           setSuccessMessage(
             `You are now ${statusArticle} ${data.accountStatus}!`,
           );
         } else {
-          setSuccess(false);
+          setSuccessMessage("");
           setErrors([data.errorMessage]);
         }
       })
@@ -43,7 +41,7 @@ function JoinClubPage() {
 
   return (
     <>
-      {success && successMessage && (
+      {successMessage && (
         <Modal message={successMessage} onClose={() => setSuccessMessage("")} />
       )}
       <form

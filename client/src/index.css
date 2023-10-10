@@ -60,7 +60,7 @@ textarea {
 form,
 div,
 ul {
-  padding: 1rem;
+  margin: 1rem;
 }
 
 input,
@@ -106,6 +106,7 @@ ul {
   color: hsla(0 55% 50%);
   border: 2px solid hsla(0 50% 25%);
   border-radius: 5px;
+  padding: 1rem;
   padding-left: 2rem;
   margin: 1rem;
   box-sizing: border-box;
@@ -176,14 +177,13 @@ h2 {
 }
 
 #new-message-button {
-  margin: 1rem 0;
+  margin: 1rem;
   border-style: dashed;
   border-width: 2px;
   box-shadow: none;
-  width: 100%;
+  display: block;
   background-color: var(--primary-light);
   text-align: center;
-  box-sizing: border-box;
 
   &:hover {
     border-color: var(--secondary);

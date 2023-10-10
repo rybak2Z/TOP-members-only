@@ -31,6 +31,10 @@ body {
   max-width: 65%;
 }
 
+#root {
+  max-width: 100%;
+}
+
 button,
 a,
 input,

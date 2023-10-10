@@ -9,6 +9,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const compression = require("compression");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const User = require("./models/user");
 
@@ -81,6 +82,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(express.static(path.join(__dirname, "../client/public")));

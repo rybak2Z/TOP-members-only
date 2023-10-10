@@ -11,6 +11,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
 const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const User = require("./models/user");
 
@@ -66,8 +67,14 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+const limiter = RateLimit({
+  windowMs: 1000 * 60,
+  max: 100,
+});
+
 const app = express();
 
+app.use(limiter);
 app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());

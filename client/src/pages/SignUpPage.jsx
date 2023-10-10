@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorList from "../components/ErrorList";
+import BackButton from "../components/BackButton";
 
 function SignUpPage() {
   const [signedUp, setSignedUp] = useState(false);
@@ -37,6 +38,7 @@ function SignUpPage() {
     <Navigate to="/" />
   ) : (
     <>
+      <BackButton />
       <form
         method="POST"
         action="/api/sign-up"

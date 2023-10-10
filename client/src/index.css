@@ -53,6 +53,10 @@ textarea {
   font-weight: normal;
 }
 
+textarea {
+  resize: none;
+}
+
 form,
 div,
 ul {
@@ -105,6 +109,10 @@ ul {
   padding-left: 2rem;
   margin: 1rem;
   box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
 }
 
 .thin-padding {

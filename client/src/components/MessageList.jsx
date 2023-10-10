@@ -4,46 +4,55 @@ import Message from "./Message";
 function MessageList() {
   const [messages, setMessages] = useState([]);
 
+  function sortMessagesByNewest(messages) {
+    for (const message of messages) {
+      message.date = new Date(message.date);
+    }
+    messages.sort((msgA, msgB) =>
+      msgA.date.getTime() < msgB.date.getTime() ? 1 : -1,
+    );
+  }
+
   useEffect(() => {
     let ignore = false;
-    fetch("/api/messages")
-      .then((response) => {
+
+    async function fetchMessages() {
+      try {
+        const response = await fetch("/api/messages");
         if (ignore) {
           return;
         }
         if (!response.ok) {
           throw new Error("HTTP error:", response.status);
         }
-        return response.json();
-      })
-      .then((data) => {
-        for (const message of data.messages) {
-          message.date = new Date(message.date);
-        }
-        data.messages.sort((msgA, msgB) =>
-          msgA.date.getTime() < msgB.date.getTime() ? 1 : -1,
-        );
+        const data = await response.json();
+        sortMessagesByNewest(data.messages);
         setMessages(data.messages);
-      });
+      } catch (error) {
+        // TODO
+        console.log(error);
+      }
+    }
+
+    fetchMessages();
 
     return () => {
       ignore = true;
     };
   }, []);
 
-  function handleDeleteMessage(indexToDelete, id) {
+  async function handleDeleteMessage(indexToDelete, id) {
     const newMessages = [...messages];
-    fetch("/api/message/" + id, { method: "DELETE" })
-      .then((response) => {
-        if (response.ok) {
-          newMessages.splice(indexToDelete, 1);
-          setMessages(newMessages);
-        }
-      })
-      .catch((err) => {
-        // TODO
-        console.log(err);
-      });
+    try {
+      const response = await fetch("/api/message/" + id, { method: "DELETE" });
+      if (response.ok) {
+        newMessages.splice(indexToDelete, 1);
+        setMessages(newMessages);
+      }
+    } catch (error) {
+      // TODO
+      console.log(error);
+    }
   }
 
   const messageElements = messages.map((message, idx) => {

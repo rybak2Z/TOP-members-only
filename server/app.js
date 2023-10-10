@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
+const helmet = require("helmet");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const User = require("./models/user");
 
@@ -67,6 +68,7 @@ passport.deserializeUser(async (id, done) => {
 
 const app = express();
 
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

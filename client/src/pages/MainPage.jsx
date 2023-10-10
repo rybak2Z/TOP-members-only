@@ -81,12 +81,10 @@ function MainPage({ setUser }) {
         </a>
       </div>
       <hr />
-      <div>
-        <Link to="create-message" id="new-message-button">
-          Create a new message
-        </Link>
-        <MessageList />
-      </div>
+      <Link to="create-message" id="new-message-button">
+        Create a new message
+      </Link>
+      <MessageList />
     </>
   );
 }

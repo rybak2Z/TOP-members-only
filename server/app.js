@@ -1,19 +1,15 @@
 require("dotenv").config();
 
 const express = require("express");
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcryptjs");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
-const helmet = require("helmet");
-const RateLimit = require("express-rate-limit");
-const MongoDBStore = require("connect-mongodb-session")(session);
-const User = require("./models/user");
+
+const authentication = require("./middleware/authentication");
+const session = require("./middleware/session");
+const security = require("./middleware/security");
 
 const apiRouter = require("./routes/api");
 
@@ -26,71 +22,15 @@ async function connectToDb() {
   console.log("Successfully connected to mongodb");
 }
 
-const sessionStore = new MongoDBStore({
-  uri: process.env.MONGODB_URI,
-  databaseName: process.env.DB_NAME,
-  collection: "sessions",
-});
-
-sessionStore.on("error", (err) => {
-  console.log(err);
-});
-
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await User.findOne({ username }).exec();
-      if (!user) {
-        return done(null, false, { message: "User not found" });
-      }
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
-  }),
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id).exec();
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
-
-const limiter = RateLimit({
-  windowMs: 1000 * 60,
-  max: 100,
-});
-
 const app = express();
 
-app.use(limiter);
-app.use(helmet());
+app.use(security);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  }),
-);
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+app.use(session);
+app.use(authentication);
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, "../client/dist")));

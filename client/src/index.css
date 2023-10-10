@@ -203,22 +203,28 @@ h2 {
   }
 }
 
-.button-list > * {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  text-align: center;
-  margin: 0.5rem 0;
+.button-list {
+  margin: 2rem 1rem;
+
+  & * {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+  }
 }
 
 #new-message-button {
-  margin: 1rem;
+  margin: 2rem 1rem 1rem 1rem;
   border-style: dashed;
   border-width: 2px;
   box-shadow: none;
   display: block;
   background-color: var(--primary-light);
   text-align: center;
+  height: 9rem;
+  line-height: 9rem;
 
   &:hover {
     border-color: var(--secondary);

@@ -4,10 +4,12 @@ import { UserContext } from "../App";
 function Message({ text, username, date, onDelete }) {
   const user = useContext(UserContext);
 
+  const formattedDate = new Date(date).toLocaleString();
+
   return (
     <li class="message">
       <h1>Author: {username ?? "(hidden for non club members)"}</h1>
-      <h2>Date: {date ?? "(hidden for non club members)"}</h2>
+      <h2>Date: {formattedDate ?? "(hidden for non club members)"}</h2>
       <p>{text}</p>
       {user.isAdmin && (
         <button class="thin-padding button-secondary" onClick={onDelete}>

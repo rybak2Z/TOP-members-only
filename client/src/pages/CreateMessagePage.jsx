@@ -52,8 +52,8 @@ function CreateMessagePage() {
         <textarea
           name="messageText"
           id="message-text"
-          rows="5"
-          cols="30"
+          rows="7"
+          cols="50"
         ></textarea>
         <button type="submit">Submit</button>
       </form>

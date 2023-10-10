@@ -17,6 +17,12 @@ function MessageList() {
         return response.json();
       })
       .then((data) => {
+        for (const message of data.messages) {
+          message.date = new Date(message.date);
+        }
+        data.messages.sort((msgA, msgB) =>
+          msgA.date.getTime() < msgB.date.getTime() ? 1 : -1,
+        );
         setMessages(data.messages);
       });
 

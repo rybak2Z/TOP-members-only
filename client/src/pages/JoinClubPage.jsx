@@ -25,9 +25,10 @@ function JoinClubPage() {
       .then((data) => {
         if (data.success) {
           const statusArticle = data.accountStatus === "admin" ? "an" : "a";
-          setSuccessMessage(
-            `You are now ${statusArticle} ${data.accountStatus}!`,
-          );
+          const message = data.isNewStatus
+            ? `You are now ${statusArticle} ${data.accountStatus}!`
+            : `You are already ${statusArticle} ${data.accountStatus}.`;
+          setSuccessMessage(message);
         } else {
           setSuccessMessage("");
           setErrors([data.errorMessage]);

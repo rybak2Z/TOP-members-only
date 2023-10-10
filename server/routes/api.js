@@ -105,8 +105,14 @@ router.post(
     }
 
     const user = await User.findById(req.user.id).exec();
+
+    let isNewStatus = !user.isMember;
     user.isMember = true;
+
     if (req.body.passcode === ADMIN_PASSCODE) {
+      if (!user.isAdmin) {
+        isNewStatus = true;
+      }
       user.isAdmin = true;
     }
 
@@ -115,6 +121,7 @@ router.post(
     res.status(200).json({
       success: true,
       accountStatus: user.isAdmin ? "admin" : "club member",
+      isNewStatus,
     });
   }),
 );

@@ -18,7 +18,7 @@ function MessageList() {
 
     async function fetchMessages() {
       try {
-        const response = await fetch("/api/messages");
+        const response = await fetch("/api/message/all");
         if (ignore) {
           return;
         }

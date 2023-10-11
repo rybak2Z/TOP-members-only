@@ -6,9 +6,9 @@ const { get_log_out } = require("../controllers/log-out");
 const { post_join_club } = require("../controllers/join-club");
 const {
   get_messages,
-  post_create_message,
+  post_message,
   delete_message,
-} = require("../controllers/message");
+} = require("../controllers/messages");
 
 const router = express.Router();
 
@@ -20,10 +20,10 @@ router.get("/log-out", get_log_out);
 
 router.post("/join-club", post_join_club);
 
-router.post("/message/", post_create_message);
+router.post("/messages/", post_message);
 
-router.get("/message/all", get_messages);
+router.get("/messages/", get_messages);
 
-router.delete("/message/:id", delete_message);
+router.delete("/messages/:id", delete_message);
 
 module.exports = router;

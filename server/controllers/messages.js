@@ -11,8 +11,11 @@ const get_messages = asyncHandler(async (req, res) => {
   if (req.user.isMember) {
     query.select("text user date");
     query.populate("user", "-_id username");
+    // No sorting. That will be done on client, since it gets the dates.
   } else {
     query.select("text");
+    // Sorting cannot happen on client because it doesn't get the dates.
+    query.sort({ date: "descending" });
   }
 
   const messages = await query.exec();

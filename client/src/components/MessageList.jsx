@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useApi from "../hooks/useApi";
 import Message from "./Message";
 
 function MessageList() {
@@ -18,7 +19,7 @@ function MessageList() {
 
     async function fetchMessages() {
       try {
-        const response = await fetch("/api/messages");
+        const response = await fetch(useApi("/api/messages"));
         if (ignore) {
           return;
         }
@@ -26,7 +27,11 @@ function MessageList() {
           throw new Error("HTTP error:", response.status);
         }
         const data = await response.json();
-        sortMessagesByNewest(data.messages);
+        // If user can see the dates, sort the messages. Otherwise, the data
+        // will have been sorted by the server
+        if (data.messages[0].date !== undefined) {
+          sortMessagesByNewest(data.messages);
+        }
         setMessages(data.messages);
       } catch (error) {
         // TODO
@@ -44,7 +49,8 @@ function MessageList() {
   async function handleDeleteMessage(indexToDelete, id) {
     const newMessages = [...messages];
     try {
-      const response = await fetch("/api/messages/" + id, { method: "DELETE" });
+      const url = useApi("/api/messages/" + id);
+      const response = await fetch(url, { method: "DELETE" });
       if (response.ok) {
         newMessages.splice(indexToDelete, 1);
         setMessages(newMessages);

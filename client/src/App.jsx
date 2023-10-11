@@ -20,11 +20,11 @@ function App() {
       element: <SignUpPage />,
     },
     {
-      path: "join-club",
-      element: <JoinClubPage />,
+      path: "/join-club",
+      element: <JoinClubPage setUser={setUser} />,
     },
     {
-      path: "create-message",
+      path: "/create-message",
       element: <CreateMessagePage />,
     },
   ]);

@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import useApi from "../hooks/useApi";
 import MessageList from "../components/MessageList";
 import LoginForm from "../components/LoginForm";
 
 function MainPage({ setUser }) {
   const user = useContext(UserContext);
+  const navigate = useNavigate();
 
   let accountStatus;
   if (user?.isAdmin) {
@@ -14,6 +16,19 @@ function MainPage({ setUser }) {
     accountStatus = "Club Member";
   } else {
     accountStatus = "Regular Member";
+  }
+
+  async function logOut() {
+    try {
+      const response = await fetch(useApi("/api/log-out"), { method: "POST" });
+      if (!response.ok) {
+        throw new Error("HTTP error:", response.status);
+      }
+      navigate(0); // Reload page
+    } catch (err) {
+      // TODO
+      console.log(err);
+    }
   }
 
   return user === null ? (
@@ -26,9 +41,15 @@ function MainPage({ setUser }) {
         <Link to="join-club" className="thin-padding">
           Become a club member
         </Link>
-        <a href="/api/log-out" className="thin-padding">
+        <Link
+          to={
+            "" /* No renavigation because it is handled in the click handler */
+          }
+          className="thin-padding"
+          onClick={logOut}
+        >
           Log out
-        </a>
+        </Link>
       </div>
       <hr />
       <Link to="create-message" id="new-message-button">

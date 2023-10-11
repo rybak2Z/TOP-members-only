@@ -1,10 +1,10 @@
-const get_log_out = (req, res, next) => {
+const post_log_out = (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    res.status(200).end();
   });
 };
 
-module.exports.get_log_out = get_log_out;
+module.exports.post_log_out = post_log_out;

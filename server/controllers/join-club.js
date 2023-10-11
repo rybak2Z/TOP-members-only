@@ -9,7 +9,7 @@ const post_join_club = [
   body("passcode").escape(),
   asyncHandler(async (req, res) => {
     if (!req.user) {
-      return res.redirect("/");
+      return res.status(401).json({ error: "Log in to join club." });
     }
 
     const validPasscode =

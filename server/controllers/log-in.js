@@ -13,7 +13,7 @@ const post_log_in = [
         isAdmin: req.user.isAdmin,
       });
     } else {
-      res.status(400).end();
+      res.status(400).json("Login failed.");
     }
   },
 ];

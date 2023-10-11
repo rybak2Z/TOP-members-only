@@ -1,3 +1,5 @@
+import useApi from "./useApi";
+
 /** Hook that returns a function that can be passed to a form element
  * to serve as a submit handler.
  * @param {function} responseHandler - Gets called with the fetch's awaited response object.
@@ -8,7 +10,7 @@ export default function useForm(responseHandler, errorHandler) {
   async function handleSubmit(event) {
     event.preventDefault(event);
 
-    const url = event.target.action;
+    const url = useApi(event.target.action);
     const method = event.target.method;
 
     fetch(url, {

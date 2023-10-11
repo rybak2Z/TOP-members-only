@@ -6,7 +6,8 @@
   },
   "private": true,
   "scripts": {
-    "dev": "cd ../client && echo \"Building client...\" && npm run build && cd ../server && DEBUG=server:* nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "dev": "DEBUG=server:* nodemon ./bin/www",
     "prettier-all": "npx prettier -w --config ../prettierrc.json --ignore-path ../.gitignore ."
   },
   "dependencies": {

@@ -19,7 +19,7 @@ const get_messages = asyncHandler(async (req, res) => {
   res.json({ messages });
 });
 
-const post_create_message = [
+const post_message = [
   body("messageText")
     .trim()
     .isLength({ min: 1 })
@@ -61,6 +61,6 @@ const delete_message = asyncHandler(async (req, res) => {
 
 module.exports = {
   get_messages,
-  post_create_message,
+  post_message,
   delete_message,
 };

@@ -5,12 +5,12 @@ function Message({ text, username, date, onDelete }) {
   const user = useContext(UserContext);
 
   return (
-    <li class="message">
+    <li className="message">
       <h1>Author: {username ?? "(hidden for non club members)"}</h1>
       <h2>Date: {date?.toLocaleString() ?? "(hidden for non club members)"}</h2>
       <p>{text}</p>
       {user.isAdmin && (
-        <button class="thin-padding button-secondary" onClick={onDelete}>
+        <button className="thin-padding button-secondary" onClick={onDelete}>
           Delete
         </button>
       )}

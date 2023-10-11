@@ -22,11 +22,11 @@ function MainPage({ setUser }) {
     <>
       <h1 style={{ marginBottom: 0 }}>Welcome, {user.username}!</h1>
       <h2>Your status: {accountStatus}</h2>
-      <div class="button-list">
-        <Link to="join-club" class="thin-padding">
+      <div className="button-list">
+        <Link to="join-club" className="thin-padding">
           Become a club member
         </Link>
-        <a href="/api/log-out" class="thin-padding">
+        <a href="/api/log-out" className="thin-padding">
           Log out
         </a>
       </div>

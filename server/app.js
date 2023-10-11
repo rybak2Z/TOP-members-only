@@ -33,14 +33,7 @@ app.use(session);
 app.use(authentication);
 app.use(compression());
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
-app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use("/api", apiRouter);
-
-app.get("*", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
 
 module.exports = app;

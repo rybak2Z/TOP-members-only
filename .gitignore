@@ -25,6 +25,9 @@
 /client/*.sln
 /client/*.sw?
 
+/client/.env*
+!/client/.env*.example
+
 # ----- server -----
 
 # Logs

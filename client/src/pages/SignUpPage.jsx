@@ -27,11 +27,11 @@ function SignUpPage() {
     <>
       <BackButton />
       <form method="POST" action="/api/sign-up" onSubmit={handleSubmit}>
-        <label for="username">Username</label>
+        <label htmlFor="username">Username</label>
         <input type="text" name="username" id="username" />
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input type="text" name="password" id="password" />
-        <label for="confirm-password">Confirm password</label>
+        <label htmlFor="confirm-password">Confirm password</label>
         <input type="text" name="confirmPassword" id="confirm-password" />
         <button type="submit">Submit</button>
       </form>

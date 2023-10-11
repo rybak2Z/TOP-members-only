@@ -18,7 +18,7 @@ function MessageList() {
 
     async function fetchMessages() {
       try {
-        const response = await fetch("/api/message/all");
+        const response = await fetch("/api/messages");
         if (ignore) {
           return;
         }
@@ -44,7 +44,7 @@ function MessageList() {
   async function handleDeleteMessage(indexToDelete, id) {
     const newMessages = [...messages];
     try {
-      const response = await fetch("/api/message/" + id, { method: "DELETE" });
+      const response = await fetch("/api/messages/" + id, { method: "DELETE" });
       if (response.ok) {
         newMessages.splice(indexToDelete, 1);
         setMessages(newMessages);
@@ -68,7 +68,7 @@ function MessageList() {
   });
 
   return (
-    <ul class="message-list">
+    <ul className="message-list">
       {messageElements.length > 0 ? messageElements : "There are no messages"}
     </ul>
   );

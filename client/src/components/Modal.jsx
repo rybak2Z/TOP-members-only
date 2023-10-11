@@ -1,9 +1,9 @@
 function Modal({ message, onClose }) {
   return (
-    <div class="modal-wrapper">
-      <div class="modal">
+    <div className="modal-wrapper">
+      <div className="modal">
         <p>{message}</p>
-        <button class="button-secondary thin-padding" onClick={onClose}>
+        <button className="button-secondary thin-padding" onClick={onClose}>
           Okay
         </button>
       </div>

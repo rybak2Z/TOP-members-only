@@ -23,17 +23,17 @@ function LoginForm({ setUser }) {
   return (
     <>
       <form method="POST" action="/api/log-in" onSubmit={handleSubmit}>
-        <label for="username">Username</label>
+        <label htmlFor="username">Username</label>
         <input type="text" name="username" id="username" />
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input type="text" name="password" id="password" />
         <button type="submit">Submit</button>
       </form>
       <ErrorList errors={errors} />
       <hr />
-      <div class="flex">
+      <div className="flex">
         <span>Don't have an account?</span>
-        <Link to="sign-up" class="thin-padding">
+        <Link to="sign-up" className="thin-padding">
           Sign up
         </Link>
       </div>

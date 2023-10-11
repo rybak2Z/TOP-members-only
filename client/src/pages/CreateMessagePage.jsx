@@ -29,7 +29,7 @@ function CreateMessagePage() {
       <BackButton />
       <h1>Create a new message</h1>
       <form method="POST" action="/api/messages" onSubmit={handleSubmit}>
-        <label for="message-text">Message</label>
+        <label htmlFor="message-text">Message</label>
         <textarea
           name="messageText"
           id="message-text"

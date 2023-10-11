@@ -33,7 +33,7 @@ function JoinClubPage() {
         <Modal message={successMessage} onClose={() => setSuccessMessage("")} />
       )}
       <form method="POST" action="api/join-club" onSubmit={handleSubmit}>
-        <label for="passcode">Secret passcode</label>
+        <label htmlFor="passcode">Secret passcode</label>
         <input type="text" name="passcode" id="passcode" />
         <button type="submit">Submit</button>
       </form>

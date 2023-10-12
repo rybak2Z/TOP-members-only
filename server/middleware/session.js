@@ -22,7 +22,7 @@ const sessionObj = session({
   saveUninitialized: true,
   maxAge: 1000 * 60 * 60, // 1 hour
   store: sessionStore,
-  cookie: { secure: useSecureCookies },
+  cookie: { secure: useSecureCookies, sameSite: "none" },
 });
 
 module.exports = sessionObj;

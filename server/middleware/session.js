@@ -18,6 +18,7 @@ const useSecureCookies = process.env.NODE_ENV === "production";
 
 const sessionObj = session({
   secret: process.env.SESSION_SECRET,
+  proxy: true,
   resave: true,
   saveUninitialized: true,
   maxAge: 1000 * 60 * 60, // 1 hour

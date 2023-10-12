@@ -14,16 +14,14 @@ sessionStore.on("error", (err) => {
   debug("Error:", err);
 });
 
+const useSecureCookies = process.env.NODE_ENV === "production";
+
 const sessionObj = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   store: sessionStore,
-  cookie: {},
+  cookie: { secure: useSecureCookies },
 });
-
-if (process.env.NODE_ENV === "production") {
-  sessionObj.cookie.secure = true;
-}
 
 module.exports = sessionObj;

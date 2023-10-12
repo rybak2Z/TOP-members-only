@@ -43,7 +43,7 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
   } catch (err) {
     debugSerialize(`Error while deserializing user ${id}: ${err}`);
-    done(err);
+    done(err, null);
   }
 });
 

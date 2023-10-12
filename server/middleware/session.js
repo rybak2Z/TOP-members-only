@@ -19,7 +19,8 @@ const useSecureCookies = process.env.NODE_ENV === "production";
 const sessionObj = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  maxAge: 1000 * 60 * 60, // 1 hour
   store: sessionStore,
   cookie: { secure: useSecureCookies },
 });

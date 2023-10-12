@@ -1,5 +1,6 @@
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const debug = require("debug")("server:session");
 
 const sessionStore = new MongoDBStore({
   uri: process.env.MONGODB_URI,
@@ -8,7 +9,7 @@ const sessionStore = new MongoDBStore({
 });
 
 sessionStore.on("error", (err) => {
-  console.log(err);
+  debug("Error:", err);
 });
 
 module.exports = session({

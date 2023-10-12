@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "DEBUG=server:* nodemon ./bin/www",
+    "dev": "nodemon ./bin/www",
     "prettier-all": "npx prettier -w --config ../prettierrc.json --ignore-path ../.gitignore ."
   },
   "dependencies": {
@@ -16,7 +16,7 @@
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
+    "debug": "^4.3.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",

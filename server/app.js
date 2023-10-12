@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
+const debug = require("debug")("server:server");
 
 const authentication = require("./middleware/authentication");
 const session = require("./middleware/session");
@@ -19,7 +20,7 @@ async function connectToDb() {
   const mongoDbUri = process.env.MONGODB_URI;
   const databaseName = process.env.DB_NAME;
   await mongoose.connect(mongoDbUri, { dbName: databaseName });
-  console.log("Successfully connected to mongodb");
+  debug("Successfully connected to mongodb");
 }
 
 const app = express();

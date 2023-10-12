@@ -11,7 +11,7 @@ const limiter = RateLimit({
 
 const corsOptions = {
   origin: true,
-  credentials: process.env.NODE_ENV === 'production',
+  credentials: process.env.NODE_ENV === "production",
 };
 
 const security = [cors(corsOptions), limiter, helmet()];

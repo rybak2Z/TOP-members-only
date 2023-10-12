@@ -7,6 +7,10 @@ const limiter = RateLimit({
   max: 100,
 });
 
-const security = [cors(), limiter, helmet()];
+const corsOptions = {
+  origin: true,
+};
+
+const security = [cors(corsOptions), limiter, helmet()];
 
 module.exports = security;

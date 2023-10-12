@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const debug = require("debug")("server:session");
@@ -12,9 +14,16 @@ sessionStore.on("error", (err) => {
   debug("Error:", err);
 });
 
-module.exports = session({
+const sessionObj = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   store: sessionStore,
+  cookie: {},
 });
+
+if (process.env.NODE_ENV === "production") {
+  sessionObj.cookie.secure = true;
+}
+
+module.exports = sessionObj;

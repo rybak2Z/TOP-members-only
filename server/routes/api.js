@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { post_sign_up } = require("../controllers/sign-up");
-const { post_log_in } = require("../controllers/log-in");
+const { post_log_in, get_is_logged_in } = require("../controllers/log-in");
 const { post_log_out } = require("../controllers/log-out");
 const { post_join_club } = require("../controllers/join-club");
 const {
@@ -15,6 +15,8 @@ const router = express.Router();
 router.post("/sign-up", post_sign_up);
 
 router.post("/log-in", post_log_in);
+
+router.get("/is-logged-in", get_is_logged_in);
 
 router.post("/log-out", post_log_out);
 

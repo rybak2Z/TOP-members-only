@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import useApi from "../hooks/useApi";
@@ -17,6 +17,38 @@ function MainPage({ setUser }) {
   } else {
     accountStatus = "Regular Member";
   }
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function checkLoggedIn() {
+      try {
+        const response = await fetch(useApi("/api/is-logged-in"), {
+          credentials: "include",
+        });
+        if (ignore) {
+          return;
+        }
+        if (!response.ok) {
+          throw new Error("HTTP error:", response.status);
+        }
+        const data = await response.json();
+        if (!data.isLoggedIn) {
+          return;
+        }
+        setUser(data.user);
+      } catch (err) {
+        // TODO
+        console.log(err);
+      }
+    }
+
+    checkLoggedIn();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   async function logOut() {
     try {

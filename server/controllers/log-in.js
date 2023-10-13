@@ -33,4 +33,11 @@ const post_log_in = [
   },
 ];
 
-module.exports.post_log_in = post_log_in;
+function get_is_logged_in(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.status(200).json({ isLoggedIn: false });
+  }
+  res.status(200).json({ isLoggedIn: true, user: req.user });
+}
+
+module.exports = { post_log_in, get_is_logged_in };

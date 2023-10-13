@@ -15,6 +15,7 @@ export default function useForm(responseHandler, errorHandler) {
 
     fetch(url, {
       method: method,
+      credentials: "include",
       body: new URLSearchParams(new FormData(event.target)),
     })
       .then((response) => {

@@ -19,7 +19,9 @@ function MessageList() {
 
     async function fetchMessages() {
       try {
-        const response = await fetch(useApi("/api/messages"));
+        const response = await fetch(useApi("/api/messages"), {
+          credentials: "include",
+        });
         if (ignore) {
           return;
         }
@@ -50,7 +52,10 @@ function MessageList() {
     const newMessages = [...messages];
     try {
       const url = useApi("/api/messages/" + id);
-      const response = await fetch(url, { method: "DELETE" });
+      const response = await fetch(url, {
+        method: "DELETE",
+        credentials: "include",
+      });
       if (response.ok) {
         newMessages.splice(indexToDelete, 1);
         setMessages(newMessages);

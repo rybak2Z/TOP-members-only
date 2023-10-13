@@ -20,7 +20,10 @@ function MainPage({ setUser }) {
 
   async function logOut() {
     try {
-      const response = await fetch(useApi("/api/log-out"), { method: "POST" });
+      const response = await fetch(useApi("/api/log-out"), {
+        method: "POST",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error("HTTP error:", response.status);
       }
